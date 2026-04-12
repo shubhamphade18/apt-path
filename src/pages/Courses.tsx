@@ -73,18 +73,29 @@ function CoursesSection({ domainId, domainLabel, isPrimary }: { domainId: string
       {courses && courses.length > 0 && (
         <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {courses.map((course, i) => (
-            <motion.a
+            <motion.div
               key={course.id}
-              href={course.url}
-              target="_blank"
-              rel="noopener noreferrer"
+              role="link"
+              tabIndex={0}
+              aria-label={`Watch ${course.title} by ${course.channel} on YouTube`}
+              onClick={() => {
+                if (course.url) {
+                  window.open(course.url, "_blank", "noopener,noreferrer");
+                }
+              }}
+              onKeyDown={(e) => {
+                if ((e.key === "Enter" || e.key === " ") && course.url) {
+                  e.preventDefault();
+                  window.open(course.url, "_blank", "noopener,noreferrer");
+                }
+              }}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="group overflow-hidden rounded-xl border border-border bg-card shadow-card transition-all hover:-translate-y-1 hover:shadow-elevated"
+              className="group cursor-pointer overflow-hidden rounded-xl border border-border bg-card shadow-card transition-all hover:-translate-y-1 hover:shadow-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <div className="relative aspect-video overflow-hidden">
-                <img src={course.thumbnail} alt={course.title} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+                <img src={course.thumbnail} alt={course.title} loading="lazy" className="h-full w-full object-cover transition-transform group-hover:scale-105" />
                 <div className="absolute inset-0 flex items-center justify-center bg-foreground/0 transition-colors group-hover:bg-foreground/20">
                   <Play className="h-10 w-10 text-primary-foreground opacity-0 transition-opacity group-hover:opacity-100" />
                 </div>
@@ -96,7 +107,7 @@ function CoursesSection({ domainId, domainLabel, isPrimary }: { domainId: string
                   <ExternalLink className="h-4 w-4 text-muted-foreground" />
                 </div>
               </div>
-            </motion.a>
+            </motion.div>
           ))}
         </div>
       )}
