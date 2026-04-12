@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Brain, BookOpen, TrendingUp, Target, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Brain, BookOpen, TrendingUp, Target, Sparkles, Users, Compass } from "lucide-react";
 
 const features = [
   { icon: Brain, title: "AI Career Detection", description: "Smart assessment identifies your strengths and ideal career path", color: "bg-primary/10 text-primary" },
